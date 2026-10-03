@@ -1,0 +1,151 @@
+/* ==========================================================================
+   PROJECTPULSE 2.0 — MODERN ENGINEERING STUDIO DESIGN SYSTEM
+   Warm, inspiring, distinctive. Space Grotesk + Plus Jakarta Sans.
+   Light (Engineering Notebook) + Dark (Rich Charcoal Studio).
+   ========================================================================== */
+
+/* ─── DARK THEME (default) ─── */
+:root,
+[data-theme="dark"] {
+  /* Surfaces — rich, warm charcoal studio tones */
+  --bg-canvas: #111315;
+  --bg-surface: #181A1D;
+  --bg-surface-elevated: #202327;
+  --bg-panel: #1A1D20;
+  --bg-subtle: #24272C;
+  --bg-input: #15171A;
+  --bg-hover: #26292F;
+  --bg-card: #181B1E;
+  --bg-card-hover: #1E2126;
+
+  /* Borders — precise, subtle engineering dividers */
+  --border-default: #2B2F36;
+  --border-strong: #3D434D;
+  --border-subtle: #22252B;
+  --border-focus: #F59E0B;
+  --border-accent: #F59E0B;
+
+  /* Brand Accents — Warm Amber, Blueprint Blue, Signal Emerald, Coral */
+  --accent-primary: #F59E0B;       /* Signal Amber */
+  --accent-primary-hover: #D97706;
+  --accent-primary-subtle: rgba(245, 158, 11, 0.12);
+  --accent-blue: #38BDF8;          /* Blueprint Cyan/Blue */
+  --accent-blue-subtle: rgba(56, 189, 248, 0.10);
+  --accent-emerald: #10B981;       /* Operational Green */
+  --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
+  --accent-rose: #F43F5E;          /* Critical / Alert */
+  --accent-rose-subtle: rgba(244, 63, 94, 0.12);
+  --accent-violet: #A855F7;        /* Tech / DNA Accent */
+  --accent-violet-subtle: rgba(168, 85, 247, 0.12);
+
+  /* Text — Warm Studio Typography */
+  --text-heading: #F8FAFC;
+  --text-primary: #E2E8F0;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-on-accent: #0F172A;
+
+  /* Status Colors */
+  --status-pending-bg: rgba(245, 158, 11, 0.10);
+  --status-pending-text: #FBBF24;
+  --status-pending-border: rgba(245, 158, 11, 0.25);
+
+  --status-progress-bg: rgba(56, 189, 248, 0.10);
+  --status-progress-text: #38BDF8;
+  --status-progress-border: rgba(56, 189, 248, 0.25);
+
+  --status-completed-bg: rgba(16, 185, 129, 0.10);
+  --status-completed-text: #34D399;
+  --status-completed-border: rgba(16, 185, 129, 0.25);
+
+  --status-danger-bg: rgba(244, 63, 94, 0.10);
+  --status-danger-text: #FB7185;
+  --status-danger-border: rgba(244, 63, 94, 0.25);
+
+  /* Geometry & Radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  /* Shadows & Depth */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.40);
+  --shadow-glow: 0 0 20px rgba(245, 158, 11, 0.15);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── LIGHT THEME (Engineering Notebook & Warm Studio) ─── */
+[data-theme="light"] {
+  /* Surfaces — warm tactile paper and studio stone */
+  --bg-canvas: #F8F9FA;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FFFFFF;
+  --bg-panel: #FFFFFF;
+  --bg-subtle: #F1F3F5;
+  --bg-input: #F8F9FA;
+  --bg-hover: #E9ECEF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
+
+  /* Borders — soft graphite sketch lines */
+  --border-default: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --border-subtle: #EDF2F7;
+  --border-focus: #D97706;
+  --border-accent: #D97706;
+
+  /* Brand Accents */
+  --accent-primary: #D97706;       /* Deep Amber */
+  --accent-primary-hover: #B45309;
+  --accent-primary-subtle: rgba(217, 119, 6, 0.08);
+  --accent-blue: #0284C7;          /* Blueprint Blue */
+  --accent-blue-subtle: rgba(2, 132, 199, 0.08);
+  --accent-emerald: #059669;       /* Maker Green */
+  --accent-emerald-subtle: rgba(5, 150, 105, 0.08);
+  --accent-rose: #E11D48;          /* Alert Crimson */
+  --accent-rose-subtle: rgba(225, 29, 72, 0.08);
+  --accent-violet: #7C3AED;
+  --accent-violet-subtle: rgba(124, 58, 237, 0.08);
+
+  /* Text — Deep Charcoal Ink */
+  --text-heading: #0F172A;
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --text-on-accent: #FFFFFF;
+
+  /* Status Colors */
+  --status-pending-bg: rgba(217, 119, 6, 0.08);
+  --status-pending-text: #B45309;
+  --status-pending-border: rgba(217, 119, 6, 0.22);
+
+  --status-progress-bg: rgba(2, 132, 199, 0.08);
+  --status-progress-text: #0284C7;
+  --status-progress-border: rgba(2, 132, 199, 0.22);
+
+  --status-completed-bg: rgba(5, 150, 105, 0.08);
+  --status-completed-text: #059669;
+  --status-completed-border: rgba(5, 150, 105, 0.22);
+
+  --status-danger-bg: rgba(225, 29, 72, 0.08);
+  --status-danger-text: #E11D48;
+  --status-danger-border: rgba(225, 29, 72, 0.22);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 20px rgba(217, 119, 6, 0.12);
+}
