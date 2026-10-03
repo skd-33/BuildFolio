@@ -21,8 +21,9 @@ textColor = "#E0E0F0"
 font = "sans serif"
 
 [server]
-# Automatically open browser when you run the app
-headless = false
+# headless is intentionally omitted — Streamlit Community Cloud sets this
+# automatically. Setting headless = false here would prevent the app from
+# starting on Cloud (it tries to open a browser that doesn't exist).
 
 [browser]
 # Disable the "Deploy to Streamlit Cloud" button (keeps UI clean)
