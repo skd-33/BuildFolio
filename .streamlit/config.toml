@@ -1,0 +1,29 @@
+# .streamlit/config.toml
+# ─────────────────────────────────────────────────────────────────
+# This file controls the global look and feel of your Streamlit app.
+# You do NOT need to write any Python code here — just configuration.
+# ─────────────────────────────────────────────────────────────────
+
+[theme]
+# Primary accent color (used for buttons, sliders, highlights)
+primaryColor = "#6C63FF"
+
+# Background of the main content area
+backgroundColor = "#0F0F1A"
+
+# Background of sidebars and input widgets
+secondaryBackgroundColor = "#1A1A2E"
+
+# Default text color
+textColor = "#E0E0F0"
+
+# Font used throughout the app
+font = "sans serif"
+
+[server]
+# Automatically open browser when you run the app
+headless = false
+
+[browser]
+# Disable the "Deploy to Streamlit Cloud" button (keeps UI clean)
+gatherUsageStats = false
