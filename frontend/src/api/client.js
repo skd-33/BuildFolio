@@ -1,10 +1,10 @@
 // Unified API Client with Cookie Authentication Support
 
-const BASE_URL = ''; // Relative path leverages Vite dev server proxy to localhost:8000
+const BASE_URL = import.meta.env.VITE_API_URL || ''; // Relative path leverages Vite dev server proxy to localhost:8000
 
 async function request(endpoint, options = {}) {
   const url = `${BASE_URL}${endpoint}`;
-  
+
   const headers = {
     'Content-Type': 'application/json',
     ...(options.headers || {}),

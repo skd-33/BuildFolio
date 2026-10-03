@@ -19,9 +19,12 @@ UPLOAD_DIR = os.getenv("UPLOAD_DIR", str(BASE_DIR / "uploads"))
 Path(UPLOAD_DIR).mkdir(parents=True, exist_ok=True)
 
 # CORS configuration
+# CORS configuration
 CORS_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if origin.strip()
 ]
