@@ -7,6 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR}/projectpulse_v2.db")
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
 
 # JWT & Authentication configuration
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-projectpulse-secret-key-change-in-production-2026")
