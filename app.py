@@ -59,6 +59,7 @@ with st.sidebar:
     st.page_link("pages/01_create_project.py",      label="➕ New Project",      icon=None)
     st.page_link("pages/03_cost_tracker.py",        label="💰 Cost Tracker",    icon=None)
     st.page_link("pages/04_showcase_editor.py",     label="🎨 Showcase Editor", icon=None)
+    st.page_link("pages/05_showcase_viewer.py",     label="🚀 Showcase",        icon=None)
     st.divider()
     st.markdown(
         "<small style='color:#5050A0'>Milestone 5 — Cost & Component Tracker ✅</small>",
@@ -221,23 +222,25 @@ else:
         st.progress(progress / 100,
                     text=f"**{name}** — {progress}% complete")
 
-        # Buttons: View, Costs, Showcase, and Delete
-        btn_col1, btn_col2, btn_col4, btn_col3, _ = st.columns([1, 1, 1.2, 1, 5.8])
+        # Buttons: View, Costs, Edit Showcase, View Showcase, Delete
+        btn_col1, btn_col2, btn_col3, btn_col4, btn_col5, _ = st.columns([1, 1, 1.3, 1.3, 1, 4.4])
         with btn_col1:
             if st.button(f"👁 View", key=f"view_{pid}", use_container_width=True):
-                # Store project id in session state so detail page knows which to load
-                # session_state is Streamlit's way to share data between pages
                 st.session_state["selected_project_id"] = pid
                 st.switch_page("pages/02_project_detail.py")
         with btn_col2:
             if st.button(f"💰 Costs", key=f"cost_{pid}", use_container_width=True):
                 st.session_state["selected_project_id"] = pid
                 st.switch_page("pages/03_cost_tracker.py")
-        with btn_col4:
-            if st.button(f"🎨 Showcase", key=f"showcase_{pid}", use_container_width=True):
+        with btn_col3:
+            if st.button(f"🎨 Edit Showcase", key=f"showcase_edit_{pid}", use_container_width=True):
                 st.session_state["selected_project_id"] = pid
                 st.switch_page("pages/04_showcase_editor.py")
-        with btn_col3:
+        with btn_col4:
+            if st.button(f"🚀 View Showcase", key=f"showcase_view_{pid}", use_container_width=True):
+                st.session_state["selected_project_id"] = pid
+                st.switch_page("pages/05_showcase_viewer.py")
+        with btn_col5:
             if st.button(f"🗑 Delete", key=f"del_{pid}", use_container_width=True):
                 st.session_state[f"confirm_delete_{pid}"] = True
                 st.rerun()

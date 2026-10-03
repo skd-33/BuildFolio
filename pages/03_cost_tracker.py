@@ -144,6 +144,7 @@ with st.sidebar:
     st.page_link("pages/02_project_detail.py", label="📋 Project Detail")
     st.page_link("pages/03_cost_tracker.py",   label="💰 Cost Tracker")
     st.page_link("pages/04_showcase_editor.py",label="🎨 Showcase Editor")
+    st.page_link("pages/05_showcase_viewer.py",label="🚀 Showcase")
     st.divider()
     st.markdown(f"**Active Project:**")
     st.markdown(f"📋 **{project['name']}**")

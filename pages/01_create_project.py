@@ -47,6 +47,7 @@ with st.sidebar:
     st.page_link("pages/01_create_project.py", label="➕ New Project")
     st.page_link("pages/03_cost_tracker.py",   label="💰 Cost Tracker")
     st.page_link("pages/04_showcase_editor.py",label="🎨 Showcase Editor")
+    st.page_link("pages/05_showcase_viewer.py",label="🚀 Showcase")
     st.divider()
     st.markdown(
         "<small style='color:#5050A0'>Milestone 5 — Cost & Component Tracker ✅</small>",

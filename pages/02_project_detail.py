@@ -90,6 +90,7 @@ with st.sidebar:
     st.page_link("pages/01_create_project.py", label="➕ New Project")
     st.page_link("pages/03_cost_tracker.py",   label="💰 Cost Tracker")
     st.page_link("pages/04_showcase_editor.py",label="🎨 Showcase Editor")
+    st.page_link("pages/05_showcase_viewer.py",label="🚀 Showcase")
     st.divider()
     st.markdown(f"**Current Project:**")
     st.markdown(f"📋 {project['name']}")
@@ -145,7 +146,7 @@ def task_status_icon(status):
 # ─────────────────────────────────────────────────────────────────
 # TOP NAVIGATION BAR
 # ─────────────────────────────────────────────────────────────────
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns([2, 2, 2, 4])
+nav_col1, nav_col2, nav_col3, nav_col4, _ = st.columns([2, 2, 2, 2, 2])
 with nav_col1:
     if st.button("← Dashboard", use_container_width=True):
         st.switch_page("app.py")
@@ -157,6 +158,10 @@ with nav_col3:
     if st.button("🎨 Showcase Editor", use_container_width=True):
         st.session_state["selected_project_id"] = project_id
         st.switch_page("pages/04_showcase_editor.py")
+with nav_col4:
+    if st.button("🚀 View Showcase", use_container_width=True):
+        st.session_state["selected_project_id"] = project_id
+        st.switch_page("pages/05_showcase_viewer.py")
 
 st.divider()
 
