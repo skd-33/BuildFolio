@@ -79,7 +79,7 @@ export default function PublicPortfolio() {
           {error || 'This project showcase is currently unpublished, private, or does not exist.'}
         </p>
         <Link to="/" className="btn btn-secondary">
-          Explore ProjectPulse
+          Explore BuildFolio
         </Link>
       </div>
     );
@@ -278,6 +278,31 @@ export default function PublicPortfolio() {
           />
         </section>
 
+        {/* EXECUTIVE SUMMARY (AI GENERATED) */}
+        {(() => {
+          const summarySec = data.sections?.find(s => s.section_type === 'summary' && s.is_visible && s.content && s.content.trim());
+          if (!summarySec) return null;
+          return (
+            <section className="panel" style={{ marginBottom: '2.5rem', padding: '2.25rem', borderLeft: '4px solid var(--accent-primary)' }}>
+              <div className="panel-header">
+                <span className="panel-title" style={{ fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Sparkles size={16} color="var(--accent-primary)" />
+                  <span>{summarySec.title || 'Executive Summary'}</span>
+                </span>
+              </div>
+              <p style={{
+                color: 'var(--text-primary)',
+                lineHeight: 1.8,
+                fontSize: '1.05rem',
+                whiteSpace: 'pre-wrap',
+                margin: 0
+              }}>
+                {summarySec.content}
+              </p>
+            </section>
+          );
+        })()}
+
         {/* SECTION 1: THE CHALLENGE & PROBLEM */}
         <section className="panel" style={{ marginBottom: '2.5rem', padding: '2.25rem' }}>
           <div className="panel-header">
@@ -344,6 +369,85 @@ export default function PublicPortfolio() {
           </section>
         )}
 
+        {/* DYNAMIC CASE STUDY SECTIONS (Hardware, Software, Architecture, Challenges, Future Improvements) */}
+        {data.sections && data.sections
+          .filter(sec => sec.is_visible && sec.content && sec.content.trim())
+          .filter(sec => !['summary', 'problem', 'solution'].includes(sec.section_type))
+          .map(sec => {
+            let items = null;
+            try {
+              const parsed = JSON.parse(sec.content);
+              if (Array.isArray(parsed) && parsed.length > 0) items = parsed;
+            } catch (e) {
+              items = null;
+            }
+
+            if (!items && !sec.content.trim()) return null;
+
+            return (
+              <section key={sec.id || sec.section_type} className="panel" style={{ marginBottom: '2.5rem', padding: '2.25rem' }}>
+                <div className="panel-header">
+                  <span className="panel-title" style={{ fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>{sec.title || sec.section_type}</span>
+                  </span>
+                </div>
+
+                {items ? (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                    gap: '0.85rem'
+                  }}>
+                    {items.map((it, idx) => (
+                      <div key={idx} style={{
+                        padding: '1rem 1.15rem',
+                        background: 'var(--bg-subtle)',
+                        border: '1px solid var(--border-default)',
+                        borderRadius: 'var(--radius-sm)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.5rem'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{
+                            fontSize: '0.68rem',
+                            fontFamily: 'var(--font-mono)',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            padding: '0.12rem 0.45rem',
+                            borderRadius: 'var(--radius-xs)',
+                            background: it.status === 'confirmed' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(59, 130, 246, 0.15)',
+                            color: it.status === 'confirmed' ? 'var(--status-success-text, #10b981)' : 'var(--status-pending-text, #3b82f6)'
+                          }}>
+                            {it.status || 'inferred'}
+                          </span>
+                          {it.source && (
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                              source: {it.source}
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: '0.925rem', color: 'var(--text-primary)', lineHeight: 1.5 }}>
+                          {it.value}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{
+                    color: 'var(--text-primary)',
+                    lineHeight: 1.8,
+                    fontSize: '1rem',
+                    whiteSpace: 'pre-wrap',
+                    margin: 0
+                  }}>
+                    {sec.content}
+                  </p>
+                )}
+              </section>
+            );
+          })}
+
         {/* SECTION 4: HARDWARE PROCUREMENT (BOM) */}
         <section className="panel" style={{ marginBottom: '3.5rem', padding: '2.25rem' }}>
           <div className="panel-header">
@@ -392,7 +496,7 @@ export default function PublicPortfolio() {
           <div style={{ fontWeight: 600, color: 'var(--text-heading)' }}>
             Published with{' '}
             <Link to="/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>
-              ProjectPulse 2.0
+              BuildFolio
             </Link>
           </div>
           <div style={{ marginTop: '0.4rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>

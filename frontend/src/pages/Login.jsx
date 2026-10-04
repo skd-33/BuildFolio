@@ -58,7 +58,7 @@ export default function Login() {
             Welcome back
           </p>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-heading)' }}>
-            Sign in to ProjectPulse
+            Sign in to BuildFolio
           </h2>
         </div>
 

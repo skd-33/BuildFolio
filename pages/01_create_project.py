@@ -22,7 +22,7 @@ import database as db
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="New Project — ProjectPulse",
+    page_title="New Project — BuildFolio",
     page_icon="➕",
     layout="wide",
 )
@@ -40,7 +40,7 @@ db.init_db()
 # SIDEBAR
 # ─────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## ⚡ ProjectPulse")
+    st.markdown("## ⚡ BuildFolio")
     st.markdown("*Your ECE Project Tracker*")
     st.divider()
     st.page_link("app.py",                     label="🏠 Dashboard")

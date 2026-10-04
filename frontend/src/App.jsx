@@ -24,7 +24,7 @@ function ProtectedRoute({ children }) {
         justifyContent: 'center',
         color: 'var(--text-secondary)'
       }}>
-        Loading ProjectPulse...
+        Loading BuildFolio...
       </div>
     );
   }

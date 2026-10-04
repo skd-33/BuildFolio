@@ -21,16 +21,7 @@ export default function Navbar() {
         {/* Brand */}
         <Link to={user ? "/dashboard" : "/"} className="nav-brand">
           <span className="brand-dot" />
-          <span>ProjectPulse</span>
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
-            fontWeight: 500,
-            color: 'var(--text-muted)',
-            marginLeft: '-0.15rem'
-          }}>
-            v2
-          </span>
+          <span>BuildFolio</span>
         </Link>
 
         {/* Links */}

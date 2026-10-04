@@ -24,7 +24,7 @@ import database as db       # Our custom database module
 # Must be the FIRST Streamlit command in the script.
 # ─────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="ProjectPulse",          # Browser tab title
+    page_title="BuildFolio",          # Browser tab title
     page_icon="⚡",                      # Browser tab icon
     layout="wide",                      # Use full browser width
     initial_sidebar_state="expanded",   # Sidebar open by default
@@ -51,7 +51,7 @@ with open(css_path) as f:
 # SIDEBAR
 # ─────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## ⚡ ProjectPulse")
+    st.markdown("## ⚡ BuildFolio")
     st.markdown("*Your ECE Project Tracker*")
     st.divider()
     st.markdown("**Navigation**")
@@ -70,7 +70,7 @@ with st.sidebar:
 # ─────────────────────────────────────────────────────────────────
 # DASHBOARD HEADER
 # ─────────────────────────────────────────────────────────────────
-st.markdown('<p class="page-title">⚡ ProjectPulse</p>', unsafe_allow_html=True)
+st.markdown('<p class="page-title">⚡ BuildFolio</p>', unsafe_allow_html=True)
 st.markdown(
     '<p class="section-subheader">ECE & Hardware Engineering Project Tracker</p>',
     unsafe_allow_html=True

@@ -14,7 +14,7 @@ client = TestClient(app)
 
 def test_full_pipeline():
     print("=" * 60)
-    print("Starting ProjectPulse 2.0 Backend Verification")
+    print("Starting BuildFolio Backend Verification")
     print("=" * 60)
 
     # 1. Health check
@@ -166,7 +166,7 @@ def test_full_pipeline():
     print(f"[PASS] 11. Public Showcase endpoint /api/public/portfolio/{slug} verified!")
 
     print("=" * 60)
-    print("ALL PROJECTPULSE 2.0 BACKEND TESTS PASSED!")
+    print("ALL BUILDFOLIO BACKEND TESTS PASSED!")
     print("=" * 60)
 
 if __name__ == "__main__":

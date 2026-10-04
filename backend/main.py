@@ -23,9 +23,9 @@ from backend.routes import (
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="ProjectPulse 2.0 API",
-    description="Modern technical project workspace & portfolio platform",
-    version="2.0.0"
+    title="BuildFolio API",
+    description="Track your engineering projects and turn them into a portfolio with local open-source AI",
+    version="1.0.0"
 )
 
 # CORS configuration supporting credentials (cookies)
@@ -47,4 +47,4 @@ app.include_router(public_router)
 
 @app.get("/api/health")
 def health_check():
-    return {"status": "ok", "app": "ProjectPulse 2.0", "version": "2.0.0"}
+    return {"status": "ok", "app": "BuildFolio", "version": "1.0.0"}

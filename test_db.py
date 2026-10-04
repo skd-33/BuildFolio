@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import database as db
 
 print("=" * 50)
-print("ProjectPulse — Database Verification Test")
+print("BuildFolio — Database Verification Test")
 print("=" * 50)
 
 # 1. Init DB

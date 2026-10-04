@@ -24,7 +24,7 @@ export default function Landing() {
             marginBottom: '1.25rem'
           }}>
             <span className="brand-dot" style={{ width: 6, height: 6 }} />
-            <span>ProjectPulse 2.0</span>
+            <span>BuildFolio</span>
           </div>
 
           <h1 style={{

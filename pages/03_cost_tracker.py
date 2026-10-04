@@ -28,7 +28,7 @@ import database as db
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Cost Tracker — ProjectPulse",
+    page_title="Cost Tracker — BuildFolio",
     page_icon="💰",
     layout="wide",
 )
@@ -136,7 +136,7 @@ progress = db.calculate_progress(project_id)
 # SIDEBAR
 # ─────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## ⚡ ProjectPulse")
+    st.markdown("## ⚡ BuildFolio")
     st.markdown("*Your ECE Project Tracker*")
     st.divider()
     st.page_link("app.py",                     label="🏠 Dashboard")

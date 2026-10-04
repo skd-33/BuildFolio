@@ -1,20 +1,21 @@
-# ProjectPulse 2.0
+# BuildFolio
 
-> Modern Technical Project Workspace & Portfolio Platform for Engineering Students and Makers.
+> Track your engineering projects and turn them into a portfolio with local open-source AI.
 
 ---
 
 ## Architecture Overview
 
-ProjectPulse 2.0 provides a modern full-stack decoupled architecture:
+BuildFolio provides a modern full-stack decoupled architecture:
 
 - **Frontend:** React + Vite + Vanilla CSS Modern Engineering Studio design system (Manrope headings, Plus Jakarta Sans body, warm amber accents, and persistent Light / Dark mode toggle)
 - **Backend:** FastAPI with modular routers, schemas, and services
 - **Database:** SQLite with SQLAlchemy ORM (isolated `projectpulse_v2.db` preventing collision with MVP)
+- **Local AI Engine:** Local Ollama integration (`gemma3:1b`) turning project materials and BOM components into comprehensive engineering case study sections
 - **Authentication:** Secure `httpOnly` cookie JWT authentication
 - **Milestone & Progress Engine:** Formula-driven task tracking with live progress calculations
 - **Hardware Cost Tracker & BOM:** Dynamic unit price × quantity calculation, budget threshold alerts (>=80% and over-budget warnings), and CSV BOM export
-- **Engineering Portfolio Showcase:** Problem statement, solution highlights, system architecture, and public shareable URLs (`/p/{slug}`) accessible without authentication
+- **Engineering Portfolio Showcase:** Problem statement, solution highlights, system architecture, verified facts tags, and public shareable URLs (`/p/{slug}`) accessible without authentication
 
 ---
 
@@ -24,6 +25,8 @@ ProjectPulse 2.0 provides a modern full-stack decoupled architecture:
 
 ```bash
 # From the repository root:
+$env:AI_PROVIDER="ollama"
+$env:AI_MODEL="gemma3:1b"
 python -m uvicorn backend.main:app --reload --port 8000
 ```
 Interactive API documentation will be available at:
@@ -61,9 +64,9 @@ python test_showcase_db.py
 
 ---
 
-## Running ProjectPulse 2.0 Automated Tests
+## Running BuildFolio Automated Tests
 
 ```bash
-# Comprehensive end-to-end verification of all ProjectPulse 2.0 backend endpoints:
+# Comprehensive end-to-end verification of all BuildFolio backend endpoints:
 python backend/tests/test_backend_api.py
 ```

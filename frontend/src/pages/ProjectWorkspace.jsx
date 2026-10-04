@@ -84,6 +84,7 @@ export default function ProjectWorkspace() {
   const [portPublished, setPortPublished] = useState(false);
   const [portSaving, setPortSaving] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [generatingAI, setGeneratingAI] = useState(false);
 
   // Settings state
   const [editName, setEditName] = useState('');
@@ -320,6 +321,29 @@ export default function ProjectWorkspace() {
     navigator.clipboard.writeText(url);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2500);
+  };
+
+  const handleGenerateAI = async () => {
+    if (portfolio?.sections?.length > 0) {
+      const confirmOverwrite = window.confirm(
+        'Generating with AI will overwrite existing portfolio sections. Do you want to proceed?'
+      );
+      if (!confirmOverwrite) return;
+    }
+
+    try {
+      setGeneratingAI(true);
+      const updated = await portfolioApi.generate(projectId);
+      setPortfolio(updated);
+      if (updated.problem) setPortProblem(updated.problem);
+      if (updated.solution) setPortSolution(updated.solution);
+      if (updated.architecture_data) setPortArch(updated.architecture_data);
+      alert('Portfolio sections generated successfully with AI!');
+    } catch (err) {
+      alert('AI Generation Failed: ' + (err.message || 'Unknown error'));
+    } finally {
+      setGeneratingAI(false);
+    }
   };
 
   const handleSaveSettings = async (e) => {
@@ -1366,7 +1390,25 @@ export default function ProjectWorkspace() {
             <div className="panel-header">
               <span className="panel-title">Public Portfolio Showcase</span>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={handleGenerateAI}
+                  disabled={generatingAI}
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    gap: '0.45rem',
+                    background: 'var(--accent-primary-subtle)',
+                    borderColor: 'var(--accent-primary)',
+                    color: 'var(--accent-primary)',
+                    fontWeight: 600
+                  }}
+                  title="Generate portfolio draft using local Ollama (gemma3:1b)"
+                >
+                  <Sparkles size={14} style={{ animation: generatingAI ? 'spin 1s linear infinite' : 'none' }} />
+                  <span>{generatingAI ? 'Generating with AI (gemma3:1b)...' : 'Generate with AI'}</span>
+                </button>
+
                 <span style={{ fontSize: '0.825rem', fontWeight: 600, color: portPublished ? 'var(--accent-emerald)' : 'var(--text-muted)' }}>
                   {portPublished ? '● Published' : '○ Draft'}
                 </span>
@@ -1481,6 +1523,75 @@ export default function ProjectWorkspace() {
               </button>
             </div>
           </div>
+
+          {/* AI-Generated Case Study Sections Overview */}
+          {portfolio?.sections && portfolio.sections.length > 0 && (
+            <div className="panel" style={{ marginBottom: '1.5rem', padding: '1.75rem' }}>
+              <div className="panel-header">
+                <span className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Sparkles size={16} color="var(--accent-primary)" />
+                  <span>AI-Generated Case Study Sections ({portfolio.sections.length})</span>
+                </span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  Visible on public case study
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                {portfolio.sections.map((sec) => {
+                  let items = null;
+                  try {
+                    const parsed = JSON.parse(sec.content);
+                    if (Array.isArray(parsed)) items = parsed;
+                  } catch (e) {
+                    items = null;
+                  }
+
+                  return (
+                    <div key={sec.id || sec.section_type} style={{
+                      background: 'var(--bg-subtle)',
+                      border: '1px solid var(--border-default)',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '1.1rem 1.25rem'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
+                        <strong style={{ color: 'var(--text-heading)', fontSize: '0.95rem' }}>{sec.title}</strong>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{sec.section_type}</span>
+                      </div>
+
+                      {items ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                          {items.map((it, i) => (
+                            <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: '0.6rem', fontSize: '0.875rem' }}>
+                              <span style={{
+                                fontSize: '0.7rem',
+                                padding: '0.15rem 0.45rem',
+                                borderRadius: 'var(--radius-xs)',
+                                fontWeight: 700,
+                                textTransform: 'uppercase',
+                                background: it.status === 'confirmed' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(59, 130, 246, 0.15)',
+                                color: it.status === 'confirmed' ? 'var(--status-success-text, #10b981)' : 'var(--status-pending-text, #3b82f6)'
+                              }}>
+                                {it.status || 'inferred'}
+                              </span>
+                              <span style={{ color: 'var(--text-primary)', flex: 1 }}>{it.value}</span>
+                              {it.source && (
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>[{it.source}]</span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+                          {sec.content}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </form>
       )}
 

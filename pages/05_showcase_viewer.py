@@ -24,7 +24,7 @@ import database as db
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Project Showcase — ProjectPulse",
+    page_title="Project Showcase — BuildFolio",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -426,7 +426,7 @@ if showcase and showcase["architecture_data"]:
 # SIDEBAR — navigation only, no editing controls
 # ─────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## ⚡ ProjectPulse")
+    st.markdown("## ⚡ BuildFolio")
     st.markdown("*Your ECE Project Tracker*")
     st.divider()
     st.page_link("app.py",                      label="🏠 Dashboard")
@@ -799,6 +799,6 @@ if not has_content:
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown(
     f'<p style="text-align:center;color:#3030A0;font-size:0.78rem;">'
-    f'⚡ ProjectPulse — {project["name"]} — ECE Project Showcase</p>',
+    f'⚡ BuildFolio — {project["name"]} — ECE Project Showcase</p>',
     unsafe_allow_html=True,
 )

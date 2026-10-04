@@ -20,7 +20,7 @@ from utils.file_manager import save_uploaded_file
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Showcase Editor — ProjectPulse",
+    page_title="Showcase Editor — BuildFolio",
     page_icon="🎨",
     layout="wide",
 )
@@ -132,7 +132,7 @@ st.markdown('<p class="page-title">🎨 Showcase Editor</p>', unsafe_allow_html=
 st.markdown(f'<p class="section-subheader">Build the public showcase page for <strong>{project["name"]}</strong></p>', unsafe_allow_html=True)
 
 with st.sidebar:
-    st.markdown("## ⚡ ProjectPulse")
+    st.markdown("## ⚡ BuildFolio")
     st.markdown("*Your ECE Project Tracker*")
     st.divider()
     st.page_link("app.py",                     label="🏠 Dashboard")

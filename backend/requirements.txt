@@ -6,3 +6,5 @@ pyjwt>=2.8.0
 bcrypt>=4.1.0
 python-multipart>=0.0.9
 psycopg[binary]>=3.2
+
+httpx

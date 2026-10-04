@@ -1,3 +1,5 @@
+import json
+import httpx
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -13,11 +15,12 @@ from backend.schemas.portfolio import (
     PortfolioMediaCreate, PortfolioMediaOut
 )
 from backend.middleware.auth import get_current_user
-from backend.services.project_service import get_project_by_id
+from backend.services.project_service import get_project_by_id, slugify
 from backend.services.portfolio_service import (
     get_portfolio_by_project_id,
     update_portfolio,
 )
+from backend.ai.service import generate_knowledge
 
 router = APIRouter(tags=["portfolio"])
 
@@ -62,6 +65,122 @@ def update_project_portfolio(
 
     updated = update_portfolio(db, portfolio, data)
     return updated
+
+@router.post("/api/projects/{project_id}/generate", response_model=PortfolioOut)
+def generate_project_portfolio(
+    project_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    project = get_project_by_id(db, project_id, current_user.id)
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+    portfolio = get_portfolio_by_project_id(db, project_id)
+    if not portfolio:
+        base_slug = slugify(project.name)
+        portfolio = Portfolio(
+            project_id=project.id,
+            slug=f"{base_slug}-{project.id}",
+            title=project.name,
+            subtitle=f"A showcase of {project.name}",
+            problem=project.description,
+            status="draft",
+            is_published=False,
+            theme="dark"
+        )
+        db.add(portfolio)
+        db.commit()
+        db.refresh(portfolio)
+
+    project_dict = {
+        "name": project.name,
+        "description": project.description or "",
+        "notes": getattr(project, "notes", "") or "",
+        "components": [{"name": c.name} for c in (project.components or [])],
+        "tasks": [
+            {
+                "name": t.name,
+                "title": t.name,
+                "done": (t.status or "").strip().lower() in ["completed", "done"]
+            }
+            for t in (project.tasks or [])
+        ]
+    }
+
+    try:
+        knowledge = generate_knowledge(project_dict)
+    except httpx.TimeoutException:
+        raise HTTPException(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            detail="AI took too long, try again"
+        )
+    except (httpx.ConnectError, httpx.ConnectTimeout):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Ollama service is unreachable at http://localhost:11434. Please ensure Ollama is running."
+        )
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="AI output validation failed after retries. Please retry."
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"AI generation failed: {str(e)}"
+        )
+
+    # Update top-level portfolio problem & solution if provided by AI
+    if knowledge.problem and knowledge.problem.strip():
+        portfolio.problem = knowledge.problem.strip()
+    if knowledge.solution and knowledge.solution.strip():
+        portfolio.solution = knowledge.solution.strip()
+
+    section_definitions = [
+        ("summary", "Executive Summary", knowledge.summary, False),
+        ("problem", "The Problem & Challenge", knowledge.problem, False),
+        ("solution", "Solution Architecture", knowledge.solution, False),
+        ("hardware", "Hardware & Components", [f.model_dump() for f in knowledge.hardware], True),
+        ("software", "Software & Tools", [f.model_dump() for f in knowledge.software], True),
+        ("architecture", "System Architecture", [f.model_dump() for f in knowledge.architecture], True),
+        ("challenges", "Key Challenges", [f.model_dump() for f in knowledge.challenges], True),
+        ("future_improvements", "Future Improvements", [f.model_dump() for f in knowledge.future_improvements], True),
+    ]
+
+    existing_sections = {s.section_type: s for s in portfolio.sections}
+
+    for idx, (sec_type, title, data, is_list) in enumerate(section_definitions):
+        if is_list:
+            if not data:
+                continue
+            content_str = json.dumps(data)
+        else:
+            if not data or not data.strip():
+                continue
+            content_str = data.strip()
+
+        if sec_type in existing_sections:
+            sec = existing_sections[sec_type]
+            sec.title = title
+            sec.content = content_str
+            sec.is_visible = True
+            sec.order_index = idx
+        else:
+            sec = PortfolioSection(
+                portfolio_id=portfolio.id,
+                section_type=sec_type,
+                title=title,
+                content=content_str,
+                order_index=idx,
+                is_visible=True
+            )
+            db.add(sec)
+
+    db.commit()
+    db.refresh(portfolio)
+    return portfolio
+
 
 @router.post("/api/projects/{project_id}/portfolio/sections", response_model=PortfolioSectionOut, status_code=status.HTTP_201_CREATED)
 def add_portfolio_section(

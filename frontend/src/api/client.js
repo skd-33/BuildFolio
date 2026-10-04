@@ -81,6 +81,7 @@ export const componentsApi = {
 export const portfolioApi = {
   get: (projectId) => request(`/api/projects/${projectId}/portfolio`, { method: 'GET' }),
   update: (projectId, data) => request(`/api/projects/${projectId}/portfolio`, { method: 'PUT', body: data }),
+  generate: (projectId) => request(`/api/projects/${projectId}/generate`, { method: 'POST' }),
   addSection: (projectId, data) => request(`/api/projects/${projectId}/portfolio/sections`, { method: 'POST', body: data }),
   deleteSection: (sectionId) => request(`/api/portfolio/sections/${sectionId}`, { method: 'DELETE' }),
   addMedia: (projectId, data) => request(`/api/projects/${projectId}/portfolio/media`, { method: 'POST', body: data }),
