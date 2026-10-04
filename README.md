@@ -10,7 +10,7 @@ BuildFolio provides a modern full-stack decoupled architecture:
 
 - **Frontend:** React + Vite + Vanilla CSS Modern Engineering Studio design system (Manrope headings, Plus Jakarta Sans body, warm amber accents, and persistent Light / Dark mode toggle)
 - **Backend:** FastAPI with modular routers, schemas, and services
-- **Database:** SQLite with SQLAlchemy ORM (isolated `projectpulse_v2.db` preventing collision with MVP)
+- **Database:** SQLite with SQLAlchemy ORM (`projectpulse_v2.db`)
 - **Local AI Engine:** Local Ollama integration (`gemma3:1b`) turning project materials and BOM components into comprehensive engineering case study sections
 - **Authentication:** Secure `httpOnly` cookie JWT authentication
 - **Milestone & Progress Engine:** Formula-driven task tracking with live progress calculations
@@ -43,24 +43,6 @@ Open your browser at:
 `http://localhost:5173`
 
 *(Vite dev server automatically proxies `/api` calls to the FastAPI backend at `http://127.0.0.1:8000` with credential support).*
-
----
-
-## Running the Existing Streamlit MVP
-
-The original Streamlit MVP has been preserved 100% intact in the repository root:
-
-```bash
-# Run Streamlit app:
-python -m streamlit run app.py
-
-# Run Streamlit test suite:
-python test_db.py
-python test_create_project.py
-python test_project_detail.py
-python test_cost_tracker.py
-python test_showcase_db.py
-```
 
 ---
 

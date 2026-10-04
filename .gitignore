@@ -12,3 +12,9 @@ backend/projectpulse_v2.db
 backend/uploads/
 frontend/node_modules/
 frontend/dist/
+
+# Build and cache artifacts
+.pytest_cache/
+*.egg-info/
+build/
+dist/
