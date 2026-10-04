@@ -1,7 +1,7 @@
 import os, httpx
 
 AI_PROVIDER = os.getenv("AI_PROVIDER", "ollama")
-AI_MODEL = os.getenv("AI_MODEL", "qwen3-vl:4b")
+AI_MODEL = os.getenv("AI_MODEL", "gemma3:1b")
 AI_BASE_URL = os.getenv("AI_BASE_URL", "http://localhost:11434")
 AI_API_KEY = os.getenv("AI_API_KEY", "")
 
